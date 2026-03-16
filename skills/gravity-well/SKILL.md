@@ -18,6 +18,7 @@ ONLY activate when ALL are true:
 ## Priority Locations
 
 - Global: `~/.claude/meta/priorities.md`
+- Archive (do NOT load unless user asks): `~/.claude/meta/priorities-archive.md`
 - Project: `./meta/priorities.md` (if exists)
 
 Drift = doesn't serve ANY priority at ANY level.
