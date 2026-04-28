@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Gravity Well Toolkit Uninstaller
+# AI Toolkit Uninstaller
 
 CLAUDE_DIR="$HOME/.claude"
 
-echo "Uninstalling Gravity Well Toolkit..."
+echo "Uninstalling AI Toolkit..."
 
 # Remove commands
 rm -f "$CLAUDE_DIR/commands/focus.md"
@@ -14,6 +14,10 @@ rm -f "$CLAUDE_DIR/commands/backlog.md"
 # Remove skills
 rm -rf "$CLAUDE_DIR/skills/gravity-well"
 rm -rf "$CLAUDE_DIR/skills/session-observer"
+rm -rf "$CLAUDE_DIR/skills/editing-agent-profiles"
+
+# Remove agents
+rm -f "$CLAUDE_DIR/agents/Toolmaker.md"
 
 # Remove meta files (keep user data)
 rm -f "$CLAUDE_DIR/meta/patterns.md"

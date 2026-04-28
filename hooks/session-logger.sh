@@ -1,6 +1,9 @@
 #!/bin/bash
-# Automatic session logger using Apple's on-device Foundation Model
-# Triggered by Claude Code's SessionEnd hook
+# Automatic session logger using Apple's on-device Foundation Model.
+# Triggered by Claude Code's SessionEnd hook.
+#
+# Requires the `afm` CLI (https://github.com/scouzi1966/maclocal-api).
+# Apple Silicon Macs running macOS 26+ only. Exits silently on other systems.
 
 # Debug log
 DEBUG_LOG="${HOME}/.claude/logs/session-logger-debug.log"
@@ -98,19 +101,22 @@ OUTPUT FORMAT (use exactly this structure):
 
 Be concise. Output ONLY the formatted log, nothing else."
 
-echo "Calling afm..." >> "$DEBUG_LOG"
-SESSION_LOG=$(afm -s "$PROMPT" 2>&1)
-echo "afm returned: ${#SESSION_LOG} chars" >> "$DEBUG_LOG"
-
-# Append to daily log file
-if [[ -n "$SESSION_LOG" ]]; then
-    echo "Writing to $LOG_FILE" >> "$DEBUG_LOG"
-    {
-        echo ""
-        echo "$SESSION_LOG"
-        echo ""
-        echo "---"
-    } >> "$LOG_FILE"
-fi
+# Run afm in background so the hook returns immediately
+# (Claude Code kills hooks after timeout, but afm can take >60s)
+echo "Launching afm in background..." >> "$DEBUG_LOG"
+(
+    SESSION_LOG=$(afm -s "$PROMPT" 2>&1)
+    echo "afm returned: ${#SESSION_LOG} chars" >> "$DEBUG_LOG"
+    if [[ -n "$SESSION_LOG" ]]; then
+        echo "Writing to $LOG_FILE" >> "$DEBUG_LOG"
+        {
+            echo ""
+            echo "$SESSION_LOG"
+            echo ""
+            echo "---"
+        } >> "$LOG_FILE"
+    fi
+) &
+disown
 
 exit 0

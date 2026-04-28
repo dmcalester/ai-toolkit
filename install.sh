@@ -1,17 +1,18 @@
 #!/bin/bash
 
-# Gravity Well Toolkit Installer
+# AI Toolkit Installer
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
 
-echo "Installing Gravity Well Toolkit..."
+echo "Installing AI Toolkit..."
 
 # Create directories
 mkdir -p "$CLAUDE_DIR/commands"
 mkdir -p "$CLAUDE_DIR/skills"
+mkdir -p "$CLAUDE_DIR/agents"
 mkdir -p "$CLAUDE_DIR/meta"
 mkdir -p "$CLAUDE_DIR/logs"
 
@@ -22,6 +23,10 @@ cp -r "$SCRIPT_DIR/commands/"* "$CLAUDE_DIR/commands/"
 # Copy skills
 echo "  Installing skills..."
 cp -r "$SCRIPT_DIR/skills/"* "$CLAUDE_DIR/skills/"
+
+# Copy agents
+echo "  Installing agents..."
+cp "$SCRIPT_DIR/agents/"*.md "$CLAUDE_DIR/agents/"
 
 # Copy meta files (don't overwrite existing priorities/backlog)
 echo "  Installing meta files..."

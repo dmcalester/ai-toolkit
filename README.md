@@ -37,8 +37,8 @@ Capture tangent ideas without losing them.
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/gravity-well-toolkit.git
-cd gravity-well-toolkit
+git clone https://github.com/yourusername/ai-toolkit.git
+cd ai-toolkit
 
 # Run installer
 ./install.sh
@@ -48,9 +48,14 @@ Or manually copy files:
 ```bash
 cp -r commands/* ~/.claude/commands/
 cp -r skills/* ~/.claude/skills/
+cp -r agents/* ~/.claude/agents/
 cp -r meta/* ~/.claude/meta/
 mkdir -p ~/.claude/logs
 ```
+
+### Optional: session logger hook
+
+`hooks/session-logger.sh` summarizes each session via Apple's on-device Foundation Model and appends to `~/.claude/logs/`. It requires the [`afm`](https://github.com/scouzi1966/maclocal-api) CLI and works only on Apple Silicon Macs running macOS 26+. Wire it up as a `SessionEnd` hook in your Claude Code settings if you want it.
 
 Then restart Claude Code to load the skills.
 
@@ -83,8 +88,11 @@ Then restart Claude Code to load the skills.
 │   ├── focus.md
 │   └── observe.md
 ├── skills/
+│   ├── editing-agent-profiles/SKILL.md
 │   ├── gravity-well/SKILL.md
 │   └── session-observer/SKILL.md
+├── agents/
+│   └── Toolmaker.md
 ├── meta/
 │   ├── patterns.md         # Pattern definitions
 │   ├── backlog.md          # Your global backlog
